@@ -1,0 +1,8 @@
+<h2>{{ item.name }}</h2>
+<dl>
+  <dt>ファイル</dt>
+  <dd><a href="{{ item.original.file.url }}">{{ item.original.basename }}</a></dd>
+  <dt>登録日時</dt>
+  <dd>{{ item.create_at }}</dd>
+  {% include "multicontents/__contenttype_link.html" %}
+</dl>

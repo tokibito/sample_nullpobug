@@ -3,9 +3,11 @@
 
 {% block main %}
 <h1>contenttypesサンプル</h1>
-{% for item in object_list %}
-<div class="item">
-{% displayitem item %}
+<div id="items">
+  {% for item in object_list %}
+    <div class="item">
+      {% displayitem item %}
+    </div>
+  {% endfor %}
 </div>
-{% endfor %}
 {% endblock %}

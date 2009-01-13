@@ -1,2 +1,6 @@
 <h2>{{ item.name }}</h2>
-{{ item.original.content|linebreaks }}
+<dl>
+  <dt>内容</dt>
+  <dd>{{ item.original.content|linebreaksbr }}</dd>
+  {% include "multicontents/__contenttype_link.html" %}
+</dl>
