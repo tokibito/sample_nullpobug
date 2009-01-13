@@ -1,6 +1,7 @@
 body {
   padding: 0;
   margin: 0;
+  background-color: #487858;
 }
 h1 {
   padding: 0.5em;
@@ -12,9 +13,6 @@ h2 {
   padding-left: 0.3em;
   line-height: 1.5;
   border-left: 0.5em solid #FFC757;
-}
-#main {
-  background-color: #487858;
 }
 #items {
   padding: 1.5em;
