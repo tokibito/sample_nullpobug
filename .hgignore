@@ -1,0 +1,5 @@
+syntax: glob
+*.dcu
+*.pyc
+*.swp
+*.db
