@@ -1,6 +1,6 @@
 <h2>{{ item.name }}</h2>
 <dl>
   <dt>内容</dt>
-  <dd>{{ item.original.content|linebreaksbr }}</dd>
+  <dd>{{ item.original.content|urlize|linebreaksbr }}</dd>
   {% include "multicontents/__contenttype_link.html" %}
 </dl>

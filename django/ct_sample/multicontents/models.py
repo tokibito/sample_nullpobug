@@ -23,7 +23,7 @@ class MultiContentItem(models.Model):
         ContentTypeに関連付けられたオブジェクトを取得する
         """
         try:
-            return self.content_type.get_object_for_this_type()
+            return self.content_type.get_object_for_this_type(pk=self.pk)
         except models.ObjectDoesNotExist:
             return
     original = property(_get_original)
