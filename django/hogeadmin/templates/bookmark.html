@@ -1,0 +1,122 @@
+{% extends "admin/app_index.html" %} 
+{% load i18n %} 
+
+{% block extrahead %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{{ MEDIA_URL }}css/bookmarks.css" type="text/css" media="screen">
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.2.6.pack.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/trimpath-template-1.0.38.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/utils.js"></script>
+  <script type="text/javascript" charset="utf-8">
+    $(document).ready(function(){
+      function render_feeds(url, elem) {
+        if (elem != undefined && $.data(elem, 'opened')) {
+          $(elem).next().remove();
+          $.data(elem, 'opened', false);
+          $.data(elem, 'loading', false);
+          return
+        }
+        if ($.data(elem, 'loading')) {
+          return
+        } else {
+          $.data(elem, 'loading', true)
+        }
+        HTTPObj.get({
+          url : '/admin/get_myfeeds/',
+          data : {url : url},
+          success : function(data) {
+            if (data.entries.length == 0) {
+              return
+            }
+            var template = TrimPath.parseDOMTemplate('template_feednode');
+            var content = template.process({entries : data.entries});
+            var obj = $('<li class="feednode">'+content+'</li>');
+            $(elem).after(obj);
+            $.data(elem, 'opened', true);
+          }
+        });
+      }
+      function render_node(parent, elem) {
+        var params = {};
+        var elem = elem;
+        if (parent) {
+          params.parent = parent;
+        }
+        if (elem != undefined && $.data(elem, 'opened')) {
+          $(elem).next().remove();
+          $.data(elem, 'opened', false);
+          return
+        }
+        HTTPObj.get({
+          url : '/admin/get_mybookmarks/',
+          data : params,
+          success : function(data) {
+            if (data.itemnodes.length == 0) {
+              return;
+            }
+            var template = TrimPath.parseDOMTemplate('template_itemnode');
+            var content = template.process({itemnode : data.itemnodes});
+            var target;
+            if (parent) {
+              var obj = $('<li class="treenode">'+content+'</li>');
+              $(elem).after(obj);
+              $.data(elem, 'opened', true);
+              $.data(elem, 'loading', false);
+              target = obj.find('.category'); 
+            } else {
+              $('#bookmark_render').html(content);
+              target = $('.category');
+            }
+            target.bind('click', function(ev) {
+              render_node(ev.target.id, ev.target);
+            });
+            $('.feed').bind('click', function(ev) {
+              render_feeds(ev.target.href, ev.target);
+              return false;
+            });
+          },
+          error : function(msg) {
+            $.data(elem, 'loading', false);
+          }
+        });
+      }
+      render_node();
+    });
+  </script>
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs"><a href="../">
+{% trans "Home" %}</a> &rsaquo; 
+ブックマーク
+</div>{% endblock %}
+
+{% block content %}
+<div id="content-main">
+  <div id="bookmark_render"></div>
+</div>
+
+<script type="text/html" id="template_itemnode">
+  <ul>
+    {for node in itemnode}
+      {if node.content_type == "Bookmark"}
+        <li><a href="${node.url}" class="bookmark" target="_blank">${node.name}</a></li>
+      {elseif node.content_type == "Category"}
+        <li><a href="javascript:void(0);" class="category" id="${node.id}">${node.name}</a></li>
+      {elseif node.content_type == "Feed"}
+        <li><a href="${node.url}" class="feed" id="${node.id}">${node.name}</a></li>
+      {else}
+        <li>${node.name}</li>
+      {/if}
+    {/for}
+  </ul>
+</script>
+
+<script type="text/html" id="template_feednode">
+  <ul>
+    {for entry in entries}
+      <li><a href="${entry.link}" target="_blank" class="feeditem">${entry.title}</a></li>
+    {/for}
+  </ul>
+</script>
+{% endblock %}

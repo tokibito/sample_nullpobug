@@ -1,0 +1,23 @@
+#bookmark_render ul {
+  padding-left: 1.5em;
+}
+#bookmark_render ul li {
+  list-style-type: none;
+  font-size: 1em;
+}
+#bookmark_render a.category {
+  padding-left: 15px;
+  background: url('../img/folder14x14.png') left no-repeat;
+}
+#bookmark_render a.bookmark {
+  padding-left: 15px;
+  background: url('../img/star14x14.png') left no-repeat;
+}
+#bookmark_render a.feeditem {
+  padding-left: 15px;
+  background: url('../img/text15x15.png') left no-repeat;
+}
+#bookmark_render a.feed {
+  padding-left: 15px;
+  background: url('../img/feed.png') left no-repeat;
+}

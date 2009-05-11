@@ -1,0 +1,17 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_modify adminmedia %}
+
+{% block after_related_objects %}
+{% if original %}
+  <table class="module">
+    <tr>
+      <th>フィードテスト:</th>
+      <td>
+        {% for entry in original.feeds.entries %}
+          <a href="{{ entry.link }}" target="_blank">{{ entry.title }}</a><br />
+        {% endfor %}
+      </td>
+    </tr>
+  </table>
+{% endif %}
+{% endblock %}
