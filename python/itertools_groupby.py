@@ -13,12 +13,8 @@ data = (
 
 def main():
     results = {}
-    for k, g in groupby(data, lambda v: v[0]):
-        for v in g:
-            results[k] = results.get(k, 0) + v[1]
-    # print
-    for k, v in results.items():
-        print '%s: %s' % (k, v)
+    for k, g in groupby(sorted(data, key=lambda v: v[0]), lambda v: v[0]):
+        print '%s: %s' % (k, list(g))
 
 if __name__ == '__main__':
     main()
