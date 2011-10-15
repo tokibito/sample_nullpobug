@@ -1,0 +1,64 @@
+[
+  {
+    "pk": 1, 
+    "model": "testapp.permission", 
+    "fields": {
+      "name": "read"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "testapp.permission", 
+    "fields": {
+      "name": "write"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "testapp.permission", 
+    "fields": {
+      "name": "execute"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "testapp.permission", 
+    "fields": {
+      "name": "admin"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "testapp.group", 
+    "fields": {
+      "name": "\u7ba1\u7406\u8005", 
+      "is_private": true, 
+      "permissions": [
+        4
+      ]
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "testapp.group", 
+    "fields": {
+      "name": "\u95b2\u89a7\u8005", 
+      "is_private": false, 
+      "permissions": [
+        1
+      ]
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "testapp.user", 
+    "fields": {
+      "user_id": "test", 
+      "email": "test@example.com", 
+      "groups": [
+        1, 
+        2
+      ]
+    }
+  }
+]
