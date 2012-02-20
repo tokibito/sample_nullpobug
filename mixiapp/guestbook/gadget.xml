@@ -47,7 +47,7 @@ function init() {
 var url = "http://nullpobug-sandbox-hrd.appspot.com/api/guestbook";
 function update_contents() {
   $("#contents").hide();
-  $("#contents").html();
+  $("#contents").html("");
   var params = {};
   params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.GET;
   params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
