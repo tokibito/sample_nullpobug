@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Module>
+  <ModulePrefs title="練習用アプリケーション">
+    <Require feature="opensocial-0.8" />
+  </ModulePrefs>
+  <Content type="html"><![CDATA[
+<!-- CDATA内はHTMLを書けます -->
+<h1>練習用アプリケーション</h1>
+
+<p>
+  OpenSocial コンテナが提供する JavaScriptAPI で、外部サーバーへリクエストを投げることができます。
+</p>
+
+<form id="postform">
+  <p><span id="user_id" style="font-style:bold"></span> さん</p>
+  <textarea id="post_body" rows="5" style="width:100%;"></textarea>
+  <input type="submit" value="メッセージを書き込む"/>
+</form>
+
+<h2>書き込まれた内容</h2>
+<div id="contents"></div>
+
+<!-- jqueryも使えます -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript">
+var user_id = null;
+function init() {
+  // 背景色変更
+  $("body").css("background-color", "#EEEEFF").css("padding", "0 1em");
+  // ユーザー名を取得
+  var req = opensocial.newDataRequest();
+  req.add(req.newFetchPersonRequest(opensocial.IdSpec.PersonId.VIEWER), "viewer");
+  req.send(function(data) {
+    var viewer = data.get("viewer").getData();
+    user_id = viewer.getDisplayName();
+    $("#user_id").text(user_id);
+  });
+  $("#postform").submit(function() {
+    post_update();
+    return false;
+  });
+  // 
+  update_contents();
+}
+
+var url = "http://nullpobug-sandbox-hrd.appspot.com/api/guestbook";
+function update_contents() {
+  $("#contents").hide();
+  $("#contents").html();
+  var params = {};
+  params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.GET;
+  params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
+  params[gadgets.io.RequestParameters.AUTHORIZATION] = gadgets.io.AuthorizationType.NONE;
+  params[gadgets.io.RequestParameters.REFRESH_INTERVAL] = 0;
+  // greetingsを取得して結果を表示
+  gadgets.io.makeRequest(url, function(response) {
+    var greetings = response.data.greetings;
+    for (var i = 0; i < greetings.length; i++) {
+      var user_id = greetings[i].user_id;
+      var body = greetings[i].body;
+      var ctime = greetings[i].ctime;
+      $("#contents").append(
+        $("<p/>").text(user_id + " さんの書き込み(" + ctime + ")")
+      ).append(
+        $("<pre/>").text(body)
+      );
+    }
+    $("#contents").show();
+  }, params);
+}
+
+function post_update() {
+  // POSTパラメータ
+  var post_data = {
+    "user_id": user_id,
+    "body": $("#post_body").val()
+  };
+  var params = {};
+  params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.POST;
+  params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
+  params[gadgets.io.RequestParameters.POST_DATA] = gadgets.io.encodeValues(post_data);
+  params[gadgets.io.RequestParameters.AUTHORIZATION] = gadgets.io.AuthorizationType.NONE;
+  // 送信して書き込み内容部分を更新
+  gadgets.io.makeRequest(url, function(response) {
+    $("#post_body").val("");
+    update_contents();
+  }, params);
+}
+
+gadgets.util.registerOnLoadHandler(init);
+</script>
+
+  ]]></Content>
+</Module>
