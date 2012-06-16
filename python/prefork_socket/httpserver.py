@@ -5,7 +5,7 @@ import signal
 
 child_processes = []
 
-content = 'HTTP/1.0 200 OK\nContent-Type: text/plain\n\nHello world\n'
+content = 'HTTP/1.0 200 OK\nContent-Type: text/plain\nLength: 11\n\nHello world\n'
 content_length = len(content)
 
 def main(host, port, children):
@@ -34,9 +34,9 @@ def main(host, port, children):
         while True:
             conn, addr = s.accept()
             data = conn.recv(1024)
-            #sys.stdout.write('pid=%d data=[%s]\n' % (pid, data))
+            sys.stdout.write('pid=%d data=[%s]\n' % (pid, data))
             conn.send(content, content_length)
-        conn.close()
+            conn.close()
 
 def accept_sigterm(sig, status):
     for pid in child_processes:

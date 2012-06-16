@@ -16,6 +16,7 @@
   <p><span id="user_id" style="font-style:bold"></span> さん</p>
   <textarea id="post_body" rows="5" style="width:100%;"></textarea>
   <input type="submit" value="メッセージを書き込む"/>
+  <a href="javascript:update_contents();">更新</a>
 </form>
 
 <h2>書き込まれた内容</h2>
