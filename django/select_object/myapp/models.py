@@ -28,6 +28,7 @@ class ProfileB(models.Model):
 class Player(object):
     def __init__(self):
         self.age = None
+        self.point = None
 
     def get_generation(self):
         if self.age:
@@ -35,5 +36,6 @@ class Player(object):
     generation = property(get_generation)
 
     def get_level(self):
-        return self.point / 100
+        if self.point:
+            return self.point / 100
     level = property(get_level)
