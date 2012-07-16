@@ -1,0 +1,112 @@
+[
+  {
+    "pk": 1, 
+    "model": "myapp.a", 
+    "fields": {
+      "name": "A1"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "myapp.a", 
+    "fields": {
+      "name": "A2"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "myapp.a", 
+    "fields": {
+      "name": "A3"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "myapp.b", 
+    "fields": {
+      "a": 1, 
+      "name": "B1"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "myapp.b", 
+    "fields": {
+      "a": 2, 
+      "name": "B2"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "myapp.b", 
+    "fields": {
+      "a": 3, 
+      "name": "B3"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "myapp.b", 
+    "fields": {
+      "a": null, 
+      "name": "B4"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "myapp.b", 
+    "fields": {
+      "a": null, 
+      "name": "B5"
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "myapp.b", 
+    "fields": {
+      "a": null, 
+      "name": "B6"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "myapp.c", 
+    "fields": {
+      "name": "C1", 
+      "b_list": [
+        1, 
+        2
+      ]
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "myapp.c", 
+    "fields": {
+      "name": "C2", 
+      "b_list": []
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "myapp.c", 
+    "fields": {
+      "name": "C3", 
+      "b_list": [
+        3, 
+        4, 
+        5
+      ]
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "myapp.c", 
+    "fields": {
+      "name": "C4", 
+      "b_list": [
+        6
+      ]
+    }
+  }
+]

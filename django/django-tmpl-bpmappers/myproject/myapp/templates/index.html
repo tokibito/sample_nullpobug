@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+  <h1>bpmappersマッピングサンプル</h1>
+  <ul>
+    {% for c in data %}
+      <li>{{ c.name }}
+        {% if c.b_list %}
+          <ul>
+          {% for b in c.b_list %}
+            <li>{{ b.name }}</li>
+            {% if b.a %}
+              <ul>
+                <li>{{ b.a.name }}</li>
+              </ul>
+            {% endif %}
+          {% endfor %}
+          </ul>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</body>
+</html>
