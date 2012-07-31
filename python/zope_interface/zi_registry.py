@@ -5,8 +5,7 @@ from zope.interface.registry import Components
 
 
 class ICalculator(Interface):
-    def calculate(val1, val2):
-        pass
+    pass
 
 
 class AddCalculator(object):
