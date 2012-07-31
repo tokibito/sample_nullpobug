@@ -4,3 +4,5 @@ syntax: glob
 *.swp
 *.db
 *.exe
+.tox
+*.egg-info
