@@ -1,5 +1,3 @@
-# coding: utf-8
-
 from bpmappers import Mapper, RawField
 from bpmappers.djangomodel import ModelMapper
 
