@@ -1,4 +1,3 @@
-from bpmappers import Mapper, RawField
 from bpmappers.djangomodel import ModelMapper
 
 from myapp.models import C
