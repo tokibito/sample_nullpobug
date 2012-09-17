@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block main %}
+<form action="{% url note:edit pk=object.pk %}" method="post">
+  {% csrf_token %}
+  <div>
+    {{ form.as_p }}
+  </div>
+  <div>
+    <input type="submit" value="保存" />
+  </div>
+</form>
+{% endblock main %}

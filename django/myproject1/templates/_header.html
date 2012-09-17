@@ -1,0 +1,18 @@
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="{% url webpage:top %}">myproject1</a>
+      <div class="nav-collapse collapse">
+        <ul class="nav">
+          <li><a href="#">{{ auth_user }}</a></li>
+          <li><a href="{% url webpage:home %}">ホーム</a></li>
+          {% if auth_user.is_authenticated %}
+          <li><a href="{% url account:logout %}">ログアウト</a></li>
+          {% else %}
+          <li><a href="{% url account:login %}">ログイン</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

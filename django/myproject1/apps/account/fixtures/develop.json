@@ -1,0 +1,12 @@
+[
+  {
+    "pk": 1, 
+    "model": "account.user", 
+    "fields": {
+      "username": "user1", 
+      "password": "098f6bcd4621d373cade4e832627b4f6", 
+      "ctime": "2012-09-16T02:42:31Z", 
+      "utime": "2012-09-16T02:43:46Z"
+    }
+  }
+]

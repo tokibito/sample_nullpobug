@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+<title>{% block title %}{% endblock title %}</title>
+<link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet">
+<style type="text/css">
+  body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+</style>
+<link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+{% block body %}
+{% include "_header.html" %}
+<div class="container">
+{% block main %}
+{% endblock main %}
+</div>
+{% endblock body %}
+<script src="{{ STATIC_URL }}js/jquery-1.8.1.min.js"></script>
+<script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+</body>
+</html>

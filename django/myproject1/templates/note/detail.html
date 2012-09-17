@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block main %}
+<h1>{{ object.title }}</h1>
+<div class="well">
+{{ object.text }}
+</div>
+<div>
+<a href="{% url note:edit pk=object.pk %}" class="btn">編集</a>
+</div>
+{% endblock main %}
