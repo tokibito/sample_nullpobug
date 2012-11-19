@@ -17,7 +17,7 @@ begin
   (* コマンドライン引数が無ければ終了 *)
   if ParamCount = 0 then
   begin
-    Writeln(Format('%s <filepath>', [ParamStr(0)]));
+    Writeln(Format('%s <filepath>', [ExtractFileName(ParamStr(0))]));
     Exit;
   end;
   (* ファイルを読み込み専用で開く *)
