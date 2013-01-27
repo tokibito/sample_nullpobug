@@ -493,7 +493,8 @@ class SPDYFrame:
             headers_frame += value
         # headers - compress(flushを使うこと)
         zlibobj = zlib.compressobj(zdict=SPDY_DICTIONARY)
-        compressed_data = zlibobj.compress(headers_frame) + zlibobj.flush(zlib.Z_SYNC_FLUSH)
+        compressed_data = zlibobj.compress(headers_frame) \
+            + zlibobj.flush(zlib.Z_SYNC_FLUSH)
         pprint.pprint(compressed_data)
         # bit & version
         frame += struct.pack('!H', self.control_bit << 15 | self.version)
