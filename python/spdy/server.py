@@ -2,25 +2,30 @@ import socket
 import ssl
 import struct
 import zlib
+import time
 import pprint
 
-RESPONSE_TEXT = b"""HTTP/1.1 200 OK
-Server: Test/0.1
-Content-Length: 12
-Keep-Alive: timeout=10, max=100
-Connection: Keep-Alive
-Content-Type: text/plain
 
-Hello, SPDY!
-"""
+RESPONSE_BODY = b'Hello, SPDY!'
+RESPONSE_HEADERS = [
+    (':status', '200 OK'),
+    (':version', 'HTTP/1.1'),
+    ('content-length', str(len(RESPONSE_BODY))),
+    ('content-type', 'text/plain'),
+]
+
+SPDY_VERSION_3_NUMBER = 3
 
 SPDY_DATA_FRAME_BIT = 0
 SPDY_CONTROL_FRAME_BIT = 1
+
 SPDY_SYN_STREAM = 1
 SPDY_SYN_REPLY = 2
 SPDY_RST_STREAM = 3
 SPDY_SETTINGS = 4
 SPDY_PING = 6
+
+SPDY_FLAG_FIN = 0x01
 
 # ZLIB用の辞書
 SPDY_DICTIONARY = \
@@ -218,6 +223,17 @@ def print_binary(binary):
         bits = bits[width:]
 
 
+def mkdate_string():
+    "Dateヘッダ用の文字列を生成して返す"
+    return time.strftime('%a, %d %b %Y %H:%M:%S GMT', time.gmtime())
+
+
+def text_to_bytes(text):
+    if type(text) == str:
+        return bytes(text, 'utf-8')
+    return text
+
+
 class SPDYFrame:
     def __init__(self, frame=None):
         self.frame = frame
@@ -226,7 +242,7 @@ class SPDYFrame:
     def decode_frame(cls, frame):
         #pprint.pprint(cls)
         #pprint.pprint(frame)
-        spdy_frame = cls(frame)
+        spdy_frame = cls(frame=frame)
         spdy_frame.decode()
         return spdy_frame
 
@@ -239,13 +255,27 @@ class SPDYFrame:
         else:
             self.decode_data_frame()
 
+    def encode(self):
+        "プロパティの値をストリームにエンコードする"
+        if self.is_control_frame():
+            return self.encode_control_frame()
+        else:
+            return self.encode_data_frame()
+
     def get_control_bit(self):
         "フレームの先頭1ビットを返す"
         if not hasattr(self, '_control_bit'):
-            #print(type(self.frame[0]))
-            self._control_bit = self.frame[0] >> 7
+            if self.frame is None:
+                self._control_bit = SPDY_CONTROL_FRAME_BIT
+            else:
+                self._control_bit = self.frame[0] >> 7
         return self._control_bit
-    control_bit = property(get_control_bit)
+
+    def set_control_bit(self, bit):
+        "フレームの先頭1ビット"
+        self._control_bit = bit
+
+    control_bit = property(get_control_bit, set_control_bit)
 
     def is_control_frame(self):
         return self.get_control_bit() == SPDY_CONTROL_FRAME_BIT
@@ -256,17 +286,31 @@ class SPDYFrame:
     def get_spdy_version(self):
         "Versionのデコード(C)"
         if not hasattr(self, '_spdy_version'):
-            self._spdy_version = \
-                struct.unpack('!H', self.frame[0:2])[0] & 0b0111111111111111
+            if self.frame is None:
+                self._spdy_version = SPDY_VERSION_3_NUMBER
+            else:
+                self._spdy_version = \
+                    struct.unpack('!H', self.frame[0:2])[0] & 0x7FFF
         return self._spdy_version
-    spdy_version = property(get_spdy_version)
+
+    def set_spdy_version(self, version):
+        self._spdy_version = version
+
+    spdy_version = property(get_spdy_version, set_spdy_version)
 
     def get_type(self):
         "Typeのデコード(C)"
         if not hasattr(self, '_type'):
-            self._type = struct.unpack('!H', self.frame[2:4])[0]
+            if self.frame is None:
+                self._type = SPDY_SYN_STREAM
+            else:
+                self._type = struct.unpack('!H', self.frame[2:4])[0]
         return self._type
-    type = property(get_type)
+
+    def set_type(self, type):
+        self._type = type
+
+    type = property(get_type, set_type)
 
     def get_data_length(self):
         "Lengthのデコード(C/D)"
@@ -279,9 +323,16 @@ class SPDYFrame:
     def get_flags(self):
         "Flagsのデコード(C/D)"
         if not hasattr(self, '_flags'):
-            self._flags = self.frame[4]
+            if self.frame is None:
+                self._flags = 0
+            else:
+                self._flags = self.frame[4]
         return self._flags
-    flags = property(get_flags)
+
+    def set_flags(self, flags):
+        self._flags = flags
+
+    flags = property(get_flags, set_flags)
 
     def get_number_of_entries(self):
         "Number of entriesのデコード(C:SETTINGS)"
@@ -294,10 +345,17 @@ class SPDYFrame:
         "Stream-IDのデコード(C/D)"
         if not hasattr(self, '_stream_id'):
             if self.type == SPDY_SYN_STREAM:
-                self._stream_id = \
-                    struct.unpack('!I', self.frame[8:12])[0] & 0x7FFFFFFF
+                if self.frame is None:
+                    self._stream_id = 1
+                else:
+                    self._stream_id = \
+                        struct.unpack('!I', self.frame[8:12])[0] & 0x7FFFFFFF
         return self._stream_id
-    stream_id = property(get_stream_id)
+
+    def set_stream_id(self, stream_id):
+        self._stream_id = stream_id
+
+    stream_id = property(get_stream_id, set_stream_id)
 
     def get_associated_to_stream_id(self):
         "Associated-To-Stream-IDのデコード(C:SYN_STREAM)"
@@ -327,7 +385,10 @@ class SPDYFrame:
         "圧縮された領域のデータ(C:SYN_STREAM)"
         zlibobj = zlib.decompressobj(zdict=SPDY_DICTIONARY)
         if not hasattr(self, '_compressed_data'):
-            self._compressed_data = zlibobj.decompress(self.frame[18:])
+            if self.frame is None:
+                self._compressed_data = ''
+            else:
+                self._compressed_data = zlibobj.decompress(self.frame[18:])
         return self._compressed_data
     compressed_data = property(get_compressed_data)
 
@@ -337,29 +398,50 @@ class SPDYFrame:
             self._number_of_name_and_value_pairs = \
                 struct.unpack('!I', self.get_compressed_data()[:4])[0]
         return self._number_of_name_and_value_pairs
-    number_of_name_and_value_pairs = property(get_number_of_name_and_value_pairs)
+    number_of_name_and_value_pairs = property(
+        get_number_of_name_and_value_pairs)
 
     def get_headers(self):
         "Name/Value pairsのデコード(C:SYN_STREAM)"
         if not hasattr(self, '_headers'):
-            headers_stream = self.get_compressed_data()[4:]
             headers_lst = []
-            while headers_stream:
-                # Nameを取得
-                name_length = struct.unpack('!I', headers_stream[:4])[0]
-                headers_stream = headers_stream[4:]
-                name = headers_stream[:name_length]
-                headers_stream = headers_stream[name_length:]
-                # Valueを取得
-                value_length = struct.unpack('!I', headers_stream[:4])[0]
-                headers_stream = headers_stream[4:]
-                value = headers_stream[:value_length]
-                headers_stream = headers_stream[value_length:]
-                # リストにペアを追加
-                headers_lst.append((name, value))
+            if self.get_compressed_data():
+                headers_stream = self.get_compressed_data()[4:]
+                while headers_stream:
+                    # Nameを取得
+                    name_length = struct.unpack('!I', headers_stream[:4])[0]
+                    headers_stream = headers_stream[4:]
+                    name = headers_stream[:name_length]
+                    headers_stream = headers_stream[name_length:]
+                    # Valueを取得
+                    value_length = struct.unpack('!I', headers_stream[:4])[0]
+                    headers_stream = headers_stream[4:]
+                    value = headers_stream[:value_length]
+                    headers_stream = headers_stream[value_length:]
+                    # リストにペアを追加
+                    headers_lst.append((name, value))
             self._headers = headers_lst
         return self._headers
-    headers = property(get_headers)
+
+    def set_headers(self, headers):
+        self._headers = headers
+
+    headers = property(get_headers, set_headers)
+
+    def get_data(self):
+        "Data(D)"
+        if not hasattr(self, '_data'):
+            if self.frame is None:
+                self._data = b''
+            else:
+                # TODO: デコードの実装
+                self._data = None
+        return self._data
+
+    def set_data(self, data):
+        self._data = data
+
+    data = property(get_data, set_data)
 
     def decode_control_frame(self):
         self.get_spdy_version()
@@ -367,6 +449,67 @@ class SPDYFrame:
 
     def decode_data_frame(self):
         self.get_spdy_version()
+
+    def encode_control_frame(self):
+        if self.type == SPDY_SYN_REPLY:
+            return self.encode_syn_reply()
+
+    def encode_data_frame(self):
+        "エンコードしたバイナリ列を返す"
+        frame = b''
+        # bit + Stream-ID
+        frame += struct.pack('!I', self.control_bit << 31 | self.stream_id)
+        # Flags
+        frame += struct.pack('!B', self.flags)
+        # Length 24bitなので先頭の1バイト削る
+        frame += struct.pack('!I', len(self.data))[1:]
+        # Data
+        frame += self.data
+        self.frame = frame
+        return frame
+
+    def encode_syn_reply(self):
+        frame = b''
+        # headers
+        headers_frame = b''
+        # headers - num
+        headers_frame += struct.pack('!I', len(self.headers) + 1)
+        # encode headers
+        encoded_headers = []
+        for name, value in self.headers:
+            encoded_headers.append(
+                (text_to_bytes(name), text_to_bytes(value)))
+        # Dateヘッダを追加しとく
+        encoded_headers.append(
+            (b'date', text_to_bytes(mkdate_string())))
+        for name, value in encoded_headers:
+            # headers - name length
+            headers_frame += struct.pack('!I', len(name))
+            # headers - name
+            headers_frame += name
+            # headers - value length
+            headers_frame += struct.pack('!I', len(value))
+            # headers - value
+            headers_frame += value
+        # headers - compress(flushを使うこと)
+        zlibobj = zlib.compressobj(zdict=SPDY_DICTIONARY)
+        compressed_data = zlibobj.compress(headers_frame) + zlibobj.flush(zlib.Z_SYNC_FLUSH)
+        pprint.pprint(compressed_data)
+        # bit & version
+        frame += struct.pack('!H', self.control_bit << 15 | self.version)
+        # type
+        frame += struct.pack('!H', self.type)
+        # flags
+        frame += struct.pack('!B', self.flags)
+        # length 24bitなので先頭の1バイト削る
+        frame += struct.pack('!I', len(compressed_data) + 4)[1:]
+        # Stream-ID 31bitなので先頭の1ビットは0にする
+        frame += struct.pack('!I', self.stream_id & 0x7FFF)
+        # append headers
+        frame += compressed_data
+        self._compressed_data = compressed_data
+        self.frame = frame
+        return frame
 
     def as_dict_control_frame(self):
         "コントロールフレームの辞書表現"
@@ -384,9 +527,10 @@ class SPDYFrame:
             result['associated_to_stream_id'] = self.associated_to_stream_id
             result['priority'] = self.priority
             result['slot'] = self.slot
-            result['compressed_data'] = self.compressed_data
-            result['number_of_name_and_value_pairs'] = self.number_of_name_and_value_pairs
-            result['headers'] = self.headers
+            #result['compressed_data'] = self.compressed_data
+            #result['number_of_name_and_value_pairs'] = \
+            #    self.number_of_name_and_value_pairs
+            #result['headers'] = self.headers
         return result
 
     def as_dict_data_frame(self):
@@ -416,8 +560,31 @@ class StreamHandler:
             pprint.pprint(spdy_frame.as_dict())
             print('----------------')
             print_binary(frame)
-            # TODO: SYN_STREAMの場合はSYN_REPLYとデータを返す
+            # SYN_STREAMの場合はSYN_REPLYとデータを返す
             if spdy_frame.type == SPDY_SYN_STREAM:
+                # SYN_REPLYを返す
+                syn_reply = SPDYFrame()
+                syn_reply.control_bit = SPDY_CONTROL_FRAME_BIT
+                syn_reply.version = SPDY_VERSION_3_NUMBER
+                syn_reply.type = SPDY_SYN_REPLY
+                #syn_reply.flags = SPDY_FLAG_FIN
+                syn_reply.stream_id = spdy_frame.stream_id
+                syn_reply.headers = RESPONSE_HEADERS
+                reply_frame = syn_reply.encode()
+                print('======= SYN_REPLY ======')
+                print_binary(reply_frame)
+                # データを返す
+                response = SPDYFrame()
+                response.control_bit = SPDY_DATA_FRAME_BIT
+                response.stream_id = spdy_frame.stream_id
+                response.flags = SPDY_FLAG_FIN
+                response.data = RESPONSE_BODY
+                data_frame = response.encode()
+                self.connection.sendall(reply_frame + data_frame)
+                print('======= SEND DATA ======')
+                print_binary(data_frame)
+            elif spdy_frame.type == SPDY_RST_STREAM:
+                print('======= RST_STREAM =======')
                 break
 
     def recv_frame(self):
