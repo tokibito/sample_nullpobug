@@ -1,7 +1,8 @@
-# coding: utf8
+# coding: utf-8
 from django.contrib import admin
 
 from guestbook.models import Greeting
+
 
 class GreetingAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'username', 'create_at')

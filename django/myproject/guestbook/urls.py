@@ -1,5 +1,9 @@
-from django.conf.urls.defaults import *
+from django.conf.urls.defaults import patterns, url
 
-urlpatterns = patterns('',
-    url(r'^$', 'guestbook.views.index', name='guestbook_index'),
+from guestbook import views as guestbook_views
+
+
+urlpatterns = patterns(
+    '',
+    url(r'^$', guestbook_views.IndexView.as_view(), name='index'),
 )

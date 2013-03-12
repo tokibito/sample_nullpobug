@@ -6,7 +6,7 @@
 <h1>ゲストブック</h1>
 <div id="form-area">
   <p>書き込みをどうぞ。</p>
-  <form action="{% url guestbook_index %}" method="post">
+  <form action="{% url "guestbook:index" %}" method="post">
     {% csrf_token %}
     <table>{{ form.as_table }}</table>
     <p><button type="submit">送信</button></p>
