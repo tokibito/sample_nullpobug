@@ -1,0 +1,3 @@
+Django==1.5.4
+bpmappers==0.7
+djangorestframework==2.3.8
