@@ -20,7 +20,7 @@ def download():
     # ストリームの読み書きの位置を先頭に変更する
     stream.seek(0)
     # Webブラウザがダウンロードしたファイルを保存するようにヘッダを指定する
-    response.content_type = 'applciation/octet-stream'
+    response.content_type = 'application/octet-stream'
     # ファイル名をtest.csvとする
     response.headers['Content-Disposition'] = "attachment; filename='test.csv'"
     return stream.getvalue()
