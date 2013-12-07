@@ -1,0 +1,26 @@
+[
+{
+  "pk": 1, 
+  "model": "customapp.customitem", 
+  "fields": {
+    "name": "spam", 
+    "price": 200
+  }
+},
+{
+  "pk": 2, 
+  "model": "customapp.customitem", 
+  "fields": {
+    "name": "ham", 
+    "price": 150
+  }
+},
+{
+  "pk": 3, 
+  "model": "customapp.customitem", 
+  "fields": {
+    "name": "egg", 
+    "price": 100
+  }
+}
+]
