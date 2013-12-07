@@ -4,6 +4,7 @@ syntax: glob
 *.swp
 *.db
 *.exe
+*.sqlite3
 .tox
 *.egg-info
 *.xml
