@@ -1,0 +1,29 @@
+[
+{
+  "pk": 1, 
+  "model": "myapp.item", 
+  "fields": {
+    "name": "\u30c7\u30fc\u30bf1", 
+    "value": 123, 
+    "updated_at": "2013-12-23T09:05:48.518Z"
+  }
+},
+{
+  "pk": 2, 
+  "model": "myapp.item", 
+  "fields": {
+    "name": "\u30c7\u30fc\u30bf2", 
+    "value": 456, 
+    "updated_at": "2013-12-23T09:05:55.080Z"
+  }
+},
+{
+  "pk": 3, 
+  "model": "myapp.item", 
+  "fields": {
+    "name": "\u30c7\u30fc\u30bf3", 
+    "value": 789, 
+    "updated_at": "2013-12-23T09:06:02.778Z"
+  }
+}
+]

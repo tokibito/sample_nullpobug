@@ -1,0 +1,4 @@
+Django==1.6.1
+spyne==2.10.9
+suds==0.4
+lxml==3.2.4
