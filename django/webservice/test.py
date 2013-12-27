@@ -1,10 +1,16 @@
 # coding: utf-8
 import os
+import urlparse
+import urllib
 
 from suds.client import Client
 
+def path2url(path):
+    return urlparse.urljoin(
+      'file:', urllib.pathname2url(path))
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-WSDL_PATH = 'file://' + os.path.join(BASE_DIR, 'service.wsdl')
+WSDL_PATH = path2url(os.path.join(BASE_DIR, 'service.wsdl'))
 
 
 def main():
@@ -29,8 +35,9 @@ def main():
     print "--- result ---"
     print result
     print "--- print ---"
-    for item in result[0]:
-        print u"name:{} value:{} updated_at:{}".format(item.name, item.value, item.updated_at)
+    if result:
+        for item in result[0]:
+            print u"name:{} value:{} updated_at:{}".format(item.name, item.value, item.updated_at)
 
 
 if __name__ == '__main__':
