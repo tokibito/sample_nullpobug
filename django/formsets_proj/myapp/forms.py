@@ -4,14 +4,13 @@ from django.forms import models
 
 from .models import Item
 
+# モデルからModelFormSetの生成を行うmodelformset_factoryを使う場合
+ItemFormSet = models.modelformset_factory(Item, extra=1)
 
+# modelformset_factoryを使わない場合
 class ItemForm(forms.ModelForm):
     class Meta:
         model = Item
 
-
-# ModelFormをFormSetにするならBaseModelFormSetを継承したクラスにすると便利
-ItemFormSet = formsets.formset_factory(ItemForm, extra=1, formset=models.BaseModelFormSet)
-ItemFormSet.model = Item
-# やってることは同じで別のショートカット関数
-ItemFormSet2 = models.modelformset_factory(Item, extra=1)
+ItemFormSet2 = formsets.formset_factory(ItemForm, extra=1, formset=models.BaseModelFormSet)
+ItemFormSet2.model = Item
