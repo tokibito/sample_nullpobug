@@ -8,4 +8,6 @@ syntax: glob
 .tox
 *.egg-info
 *.xml
+*.local
 venv
+__history
