@@ -1,11 +1,11 @@
-program LocalCalculator;
+program RemoteCalculator;
 
 {$APPTYPE CONSOLE}
 
 uses
   System.SysUtils
   , Nullpobug.Example.Spring4d.Calculator
-  , Nullpobug.Example.Spring4d.RemoteMathService
+  , Nullpobug.Example.Spring4d.RemoteMathService  // ここで依存性注入
   ;
 
 var

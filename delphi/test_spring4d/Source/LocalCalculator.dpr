@@ -5,7 +5,7 @@ program LocalCalculator;
 uses
   System.SysUtils
   , Nullpobug.Example.Spring4d.Calculator
-  , Nullpobug.Example.Spring4d.LocalMathService
+  , Nullpobug.Example.Spring4d.LocalMathService  // ここで依存性注入
   ;
 
 var
