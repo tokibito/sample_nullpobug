@@ -16,6 +16,7 @@ type
     function Addition(A, B: Integer): Integer;
     function Multiplication(A, B: Integer): Integer;
     property MathService: IMathService read FMathService;
+    class procedure Main;
   end;
  
 implementation
@@ -34,5 +35,19 @@ function TCalculator.Multiplication(A, B: Integer): Integer;
 begin
   Result := FMathService.Multiply(A, B);
 end;
- 
+
+class procedure TCalculator.Main;
+var
+  FCalculator: TCalculator;
+begin
+  FCalculator := TCalculator.Create;
+  try
+    Writeln(FCalculator.MathService.Name);
+    Writeln('10 + 20 = ', FCalculator.Addition(10, 20));
+    Writeln('10 * 20 = ', FCalculator.Multiplication(10, 20));
+  finally
+    FCalculator.Free;
+  end;
+end;
+
 end.
