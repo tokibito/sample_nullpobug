@@ -1,4 +1,4 @@
-program Test;
+program CalculatorTest;
 
 {$APPTYPE CONSOLE}
 
