@@ -12,7 +12,7 @@ uses
 
 begin
   try
-    // ReportMemoryLeaksOnShutdown := True;
+    ReportMemoryLeaksOnShutdown := True;
     Nullpobug.UnitTest.RunTest;  
   except
     on E: Exception do
