@@ -1,4 +1,4 @@
-unit Nullpobug.Example.Spring4d.Container;
+unit Nullpobug.Example.Spring4d.ServiceLocator;
  
 interface
  

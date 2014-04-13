@@ -3,8 +3,8 @@ unit Nullpobug.Example.Spring4d.Calculator;
 interface
  
 uses
-  Nullpobug.Example.Spring4d.Container
-  , Nullpobug.Example.Spring4d.MathService
+  Nullpobug.Example.Spring4d.ServiceLocator
+  , Nullpobug.Example.Spring4d.MathServiceIntf
   ;
  
 type
@@ -13,8 +13,9 @@ type
     FMathService: IMathService;
   public
     constructor Create;
-    function Addition(a, b: integer): integer;
-    function Multiplication(a, b: integer): integer;
+    function Addition(A, B: Integer): Integer;
+    function Multiplication(A, B: Integer): Integer;
+    property MathService: IMathService read FMathService;
   end;
  
 implementation
@@ -24,14 +25,14 @@ begin
   FMathService := ServiceLocator.Resolve<IMathService>;
 end;
  
-function TCalculator.Addition(a, b: integer): integer;
+function TCalculator.Addition(A, B: Integer): Integer;
 begin
-  Result := FMathService.Add(a, b);
+  Result := FMathService.Add(A, B);
 end;
  
-function TCalculator.Multiplication(a, b: integer): integer;
+function TCalculator.Multiplication(A, B: Integer): Integer;
 begin
-  Result := FMathService.Multiply(a, b);
+  Result := FMathService.Multiply(A, B);
 end;
  
 end.

@@ -9,5 +9,6 @@ syntax: glob
 *.egg-info
 *.xml
 *.local
+*.identcache
 venv
 __history
