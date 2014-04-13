@@ -16,8 +16,8 @@ begin
     FCalculator := TCalculator.Create;
     try
       Writeln(FCalculator.MathService.Name);
-      Writeln(FCalculator.Addition(10, 20));
-      Writeln(FCalculator.Multiplication(10, 20));
+      Writeln('10 + 20 = ', FCalculator.Addition(10, 20));
+      Writeln('10 * 20 = ', FCalculator.Multiplication(10, 20));
     finally
       FCalculator.Free;
     end;
