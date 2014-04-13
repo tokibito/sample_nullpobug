@@ -1,4 +1,4 @@
-all: local remote
+all: local remote test_project
 
 local:
 	dcc32 \
@@ -19,6 +19,18 @@ remote:
 		-u"Source" \
 		--default-namespace:System \
 		Source\RemoteCalculator.dpr
+
+test_project:
+	dcc32 \
+		-$M+ \
+		-e"Build\Win32" \
+		-u"%DELPHI%\source" \
+		-u"%DELPHI%\source\soap" \
+		-u"%DELPHI%\source\rtl\win" \
+		-u"DependencySource" \
+		-u"Source" \
+		--default-namespace:System \
+		Source\CalculatorTest.dpr
 
 run:
 	Build\Win32\LocalCalculator.exe
