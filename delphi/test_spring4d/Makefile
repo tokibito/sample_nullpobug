@@ -93,7 +93,7 @@ osx_local_gui:
 osx_remote_gui:
 	dccosx \
 		-W- \
-		-e"Build\Win32" \
+		-e"Build\MacOSX" \
 		-u"%DELPHI%\source" \
 		-u"%DELPHI%\source\soap" \
 		-u"DependencySource" \
