@@ -1,4 +1,4 @@
-program RemoteCalculator;
+program RemoteCalculatorGUI;
 
 {$APPTYPE CONSOLE}
 
@@ -6,7 +6,7 @@ uses
   System.SysUtils
   , Nullpobug.Example.Spring4d.Calculator
   , Nullpobug.Example.Spring4d.RemoteMathService  // ここで依存性注入
-  , Nullpobug.Example.Spring4d.CalculatorCUI  // ここで依存性注入
+  , Nullpobug.Example.Spring4d.CalculatorGUI  // ここで依存性注入
   ;
 
 begin

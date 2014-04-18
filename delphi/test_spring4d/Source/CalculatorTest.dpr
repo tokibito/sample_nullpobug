@@ -8,6 +8,7 @@ uses
   , Nullpobug.Example.Spring4d.Calculator
   , Nullpobug.Example.Spring4d.CalculatorTest
   , Nullpobug.Example.Spring4d.LocalMathService  // ここで依存性注入
+  , Nullpobug.Example.Spring4d.CalculatorCUI  // ここで依存性注入
   ;
 
 begin

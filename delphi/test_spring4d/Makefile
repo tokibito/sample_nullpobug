@@ -1,4 +1,4 @@
-all: local remote test_project
+all: local remote local_gui test_project
 
 local:
 	dcc32 \
@@ -19,6 +19,26 @@ remote:
 		-u"Source" \
 		--default-namespace:System \
 		Source\RemoteCalculator.dpr
+
+local_gui:
+	dcc32 \
+		-e"Build\Win32" \
+		-u"%DELPHI%\source" \
+		-u"DependencySource" \
+		-u"Source" \
+		--default-namespace:System \
+		Source\LocalCalculatorGUI.dpr
+
+remote_gui:
+	dcc32 \
+		-e"Build\Win32" \
+		-u"%DELPHI%\source" \
+		-u"%DELPHI%\source\soap" \
+		-u"%DELPHI%\source\rtl\win" \
+		-u"DependencySource" \
+		-u"Source" \
+		--default-namespace:System \
+		Source\RemoteCalculatorGUI.dpr
 
 test_project:
 	dcc32 \
