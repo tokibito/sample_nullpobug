@@ -5,7 +5,7 @@ interface
 implementation
 
 uses
-  Vcl.Forms
+  FMX.Forms
   , Nullpobug.Example.Spring4d.ServiceLocator
   , Nullpobug.Example.Spring4d.CalculatorUIIntf
   , Nullpobug.Example.Spring4d.CalculatorGUIForm
@@ -21,6 +21,7 @@ type
 constructor TCalculatorGUIImpl.Create;
 begin
   Application.CreateForm(TCalculatorGUIForm, CalculatorGUIForm);
+  Application.RealCreateForms;
   CalculatorGUIForm.Show;
 end;
 

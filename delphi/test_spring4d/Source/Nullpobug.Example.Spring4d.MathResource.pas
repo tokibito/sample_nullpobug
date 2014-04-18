@@ -15,8 +15,10 @@ uses
   , Soap.SOAPHTTPClient
   , Soap.XSBuiltIns
   , System.Types
+  {$IFDEF MSWINDOWS}
   , System.Win.ComObj
   , Winapi.ActiveX
+  {$ENDIF}
   , Xml.xmldom
   ;
 
@@ -93,7 +95,7 @@ end;
 
 
 initialization
-  {$IFDEF MACOSX}
+  {$IFDEF MACOS}
   DefaultDOMVendor := 'ADOM XML v4';
   {$ELSE}
   CoInitializeEx(nil, COINIT_MULTITHREADED);

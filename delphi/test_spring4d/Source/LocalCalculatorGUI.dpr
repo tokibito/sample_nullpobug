@@ -1,4 +1,4 @@
-program LocalCalculatorGUI;
+﻿program LocalCalculatorGUI;
 
 {$APPTYPE GUI}
 

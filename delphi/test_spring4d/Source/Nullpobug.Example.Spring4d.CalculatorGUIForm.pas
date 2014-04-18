@@ -3,16 +3,20 @@ unit Nullpobug.Example.Spring4d.CalculatorGUIForm;
 interface
 
 uses
-  Winapi.Windows
-  , Winapi.Messages
-  , System.SysUtils
-  , System.Variants
+  System.SysUtils
+  , System.Types
+  , System.UITypes
+  , System.Rtti
   , System.Classes
-  , Vcl.Graphics
-  , Vcl.Controls
-  , Vcl.Forms
-  , Vcl.Dialogs
-  , Vcl.StdCtrls;
+  , System.Variants
+  , FMX.Types
+  , FMX.Controls
+  , FMX.Forms
+  , FMX.Dialogs
+  , FMX.StdCtrls
+  , FMX.Layouts
+  , FMX.Memo
+  ;
 
 type
   TCalculatorGUIForm = class(TForm)
@@ -27,7 +31,7 @@ var
 
 implementation
 
-{$R *.dfm}
+{$R *.fmx}
 
 procedure TCalculatorGUIForm.FormCreate(Sender: TObject);
 begin

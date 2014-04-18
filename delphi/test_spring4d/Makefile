@@ -57,6 +57,50 @@ test_project:
 		--default-namespace:System \
 		Source\CalculatorTest.dpr
 
+osx: osx_local osx_remote osx_local_gui osx_remote_gui
+
+osx_local:
+	dccosx \
+		-W- \
+		-e"Build\MacOSX" \
+		-u"%DELPHI%\source" \
+		-u"DependencySource" \
+		-u"Source" \
+		--default-namespace:System \
+		Source\LocalCalculator.dpr
+
+osx_remote:
+	dccosx \
+		-W- \
+		-e"Build\MacOSX" \
+		-u"%DELPHI%\source" \
+		-u"%DELPHI%\source\soap" \
+		-u"DependencySource" \
+		-u"Source" \
+		--default-namespace:System \
+		Source\RemoteCalculator.dpr
+
+osx_local_gui:
+	dccosx \
+		-W- \
+		-e"Build\MacOSX" \
+		-u"%DELPHI%\source" \
+		-u"DependencySource" \
+		-u"Source" \
+		--default-namespace:System \
+		Source\LocalCalculatorGUI.dpr
+
+osx_remote_gui:
+	dccosx \
+		-W- \
+		-e"Build\Win32" \
+		-u"%DELPHI%\source" \
+		-u"%DELPHI%\source\soap" \
+		-u"DependencySource" \
+		-u"Source" \
+		--default-namespace:System \
+		Source\RemoteCalculatorGUI.dpr
+
 run:
 	Build\Win32\LocalCalculator.exe
 	Build\Win32\RemoteCalculator.exe

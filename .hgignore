@@ -12,3 +12,4 @@ syntax: glob
 *.identcache
 venv
 __history
+Build

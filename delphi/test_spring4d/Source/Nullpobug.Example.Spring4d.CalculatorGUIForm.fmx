@@ -1,0 +1,24 @@
+object CalculatorGUIForm: TCalculatorGUIForm
+  Left = 0
+  Top = 0
+  Caption = 'CalculatorGUIForm'
+  ClientHeight = 149
+  ClientWidth = 366
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [dkDesktop, dkiPhone, dkiPad]
+  OnCreate = FormCreate
+  DesignerMobile = False
+  DesignerWidth = 0
+  DesignerHeight = 0
+  DesignerDeviceName = ''
+  DesignerOrientation = 0
+  object DisplayArea: TMemo
+    Align = alClient
+    Height = 149.000000000000000000
+    TabOrder = 0
+    Width = 366.000000000000000000
+    Font.Size = 15.000000000000000000
+    StyledSettings = [ssFamily, ssStyle, ssFontColor]
+  end
+end
