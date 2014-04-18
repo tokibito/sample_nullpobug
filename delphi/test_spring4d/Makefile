@@ -1,7 +1,8 @@
-all: local remote local_gui test_project
+all: local remote local_gui remote_gui test_project
 
 local:
 	dcc32 \
+		-W- \
 		-e"Build\Win32" \
 		-u"%DELPHI%\source" \
 		-u"DependencySource" \
@@ -11,6 +12,7 @@ local:
 
 remote:
 	dcc32 \
+		-W- \
 		-e"Build\Win32" \
 		-u"%DELPHI%\source" \
 		-u"%DELPHI%\source\soap" \
@@ -22,6 +24,7 @@ remote:
 
 local_gui:
 	dcc32 \
+		-W- \
 		-e"Build\Win32" \
 		-u"%DELPHI%\source" \
 		-u"DependencySource" \
@@ -31,6 +34,7 @@ local_gui:
 
 remote_gui:
 	dcc32 \
+		-W- \
 		-e"Build\Win32" \
 		-u"%DELPHI%\source" \
 		-u"%DELPHI%\source\soap" \
@@ -43,6 +47,7 @@ remote_gui:
 test_project:
 	dcc32 \
 		-$M+ \
+		-W- \
 		-e"Build\Win32" \
 		-u"%DELPHI%\source" \
 		-u"%DELPHI%\source\soap" \
