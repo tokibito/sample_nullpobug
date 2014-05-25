@@ -6,4 +6,12 @@ PythonからJavaのプログラムを実行して標準出力の結果を取得�
 
 myproject以下はDjangoで実行する例です。
 
-Python 2.7, 3.4で動作確認
+Ubuntu14.04, Python 2.7, 3.4で動作確認
+
+::
+
+  python main.py
+
+JavaのインストールはPPAから実行しました。
+
+http://stackoverflow.com/questions/16263556/installing-java-7-on-ubuntu
