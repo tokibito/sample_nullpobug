@@ -1,9 +1,9 @@
-import java.util.Dictionary;
-import java.util.Hashtable;
+import java.util.Map;
+import java.util.HashMap;
 
 class Main {
   public static void main(String[] args) {
-    Dictionary<String, String> dct = new Hashtable<String, String>();
+    Map<String, String> dct = new HashMap<String, String>();
     dct.put("foo", "bar");
     dct.put("hoge", "fuga");
     System.out.println(dct);
