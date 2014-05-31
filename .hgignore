@@ -10,6 +10,7 @@ syntax: glob
 *.xml
 *.local
 *.identcache
+*.class
 venv
 __history
 Build
