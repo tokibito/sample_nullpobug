@@ -1,7 +1,7 @@
 import java.util.Map;
 import java.util.HashMap;
 
-class Main {
+public class Main {
   public static void main(String[] args) {
     Map<String, String> dct = new HashMap<String, String>();
     dct.put("foo", "bar");
