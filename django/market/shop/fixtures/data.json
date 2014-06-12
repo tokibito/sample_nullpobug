@@ -1,0 +1,122 @@
+[
+{
+  "pk": 1, 
+  "model": "shop.category", 
+  "fields": {
+    "name": "\u679c\u7269"
+  }
+},
+{
+  "pk": 2, 
+  "model": "shop.category", 
+  "fields": {
+    "name": "\u91ce\u83dc"
+  }
+},
+{
+  "pk": 1, 
+  "model": "shop.item", 
+  "fields": {
+    "category": 1, 
+    "price": 100, 
+    "code": "001", 
+    "name": "\u308a\u3093\u3054"
+  }
+},
+{
+  "pk": 2, 
+  "model": "shop.item", 
+  "fields": {
+    "category": 1, 
+    "price": 50, 
+    "code": "002", 
+    "name": "\u307f\u304b\u3093"
+  }
+},
+{
+  "pk": 3, 
+  "model": "shop.item", 
+  "fields": {
+    "category": 2, 
+    "price": 80, 
+    "code": "003", 
+    "name": "\u3058\u3083\u304c\u3044\u3082"
+  }
+},
+{
+  "pk": 4, 
+  "model": "shop.item", 
+  "fields": {
+    "category": 2, 
+    "price": 90, 
+    "code": "004", 
+    "name": "\u306b\u3093\u3058\u3093"
+  }
+},
+{
+  "pk": 5, 
+  "model": "shop.item", 
+  "fields": {
+    "category": 2, 
+    "price": 60, 
+    "code": "005", 
+    "name": "\u305f\u307e\u306d\u304e"
+  }
+},
+{
+  "pk": 1, 
+  "model": "shop.bundle", 
+  "fields": {
+    "price": 120, 
+    "name": "\u30d5\u30eb\u30fc\u30c4\u30bb\u30c3\u30c8"
+  }
+},
+{
+  "pk": 2, 
+  "model": "shop.bundle", 
+  "fields": {
+    "price": 200, 
+    "name": "\u30ab\u30ec\u30fc\u30bb\u30c3\u30c8"
+  }
+},
+{
+  "pk": 1, 
+  "model": "shop.bundleitem", 
+  "fields": {
+    "item": 1, 
+    "bundle": 1
+  }
+},
+{
+  "pk": 2, 
+  "model": "shop.bundleitem", 
+  "fields": {
+    "item": 2, 
+    "bundle": 1
+  }
+},
+{
+  "pk": 3, 
+  "model": "shop.bundleitem", 
+  "fields": {
+    "item": 3, 
+    "bundle": 2
+  }
+},
+{
+  "pk": 4, 
+  "model": "shop.bundleitem", 
+  "fields": {
+    "item": 4, 
+    "bundle": 2
+  }
+},
+{
+  "pk": 5, 
+  "model": "shop.bundleitem", 
+  "fields": {
+    "item": 5, 
+    "bundle": 2
+  }
+}
+]
