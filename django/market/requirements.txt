@@ -1,2 +1,3 @@
 Django
 mysql-python
+django-extensions
