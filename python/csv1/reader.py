@@ -5,6 +5,7 @@ import csv
 def main():
     with open('data.csv') as csvfile:
         reader = csv.reader(csvfile)
+        # readerのシーケンスはリストを返す
         for row in reader:
             for idx, value in enumerate(row):
                 print u"{}: {}".format(idx + 1, value.decode('cp932'))
