@@ -1,0 +1,14 @@
+# coding: utf-8
+import csv
+
+
+def main():
+    with open('data.csv') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for record in reader:
+            for key, value in record.items():
+                print u"{}: {}".format(key, value.decode('cp932'))
+            print "-" * 10
+
+if __name__ == '__main__':
+    main()
