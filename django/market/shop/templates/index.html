@@ -1,0 +1,15 @@
+<html>
+<body>
+<ul>
+{% for bundle in bundles %}
+  <li>{{ bundle.name }}
+    <ul>
+    {% for item in bundle.items.all %}
+      <li>{{ item }} - {{ item.category }}</li>
+    {% endfor %}
+    </ul>
+  </li>
+{% endfor %}
+</ul>
+</body>
+</html>

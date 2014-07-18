@@ -1,3 +1,5 @@
 Django
 mysql-python
+django-debug-toolbar
 django-extensions
+werkzeug
