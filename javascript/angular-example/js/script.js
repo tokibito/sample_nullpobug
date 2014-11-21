@@ -1,6 +1,6 @@
 var myApp = angular.module('myApp', []);
 
-myApp.controller('myController', function ($scope, $http) {
+myApp.controller('myController', ['$scope', '$http', function ($scope, $http) {
   $scope.items = [];
   $scope.load = function(url) {
     // ajaxの例
@@ -35,4 +35,4 @@ myApp.controller('myController', function ($scope, $http) {
     // DOM操作にjQueryを使う
     $("#target").text(angular.toJson($scope.items));
   };
-});
+}]);
