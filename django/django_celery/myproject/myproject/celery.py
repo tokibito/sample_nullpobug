@@ -1,5 +1,6 @@
 import os
 
+import django
 from django.conf import settings
 
 from .celery_app import get_celery_app
