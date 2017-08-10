@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Bootstrap styles -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.fileupload.css') }}">
+</head>
+<body>
+<h1>ファイルアップロード</h1>
+<div class="container">
+  <!-- The fileinput-button span is used to style the file input field as button -->
+  <span class="btn btn-success fileinput-button">
+    <i class="glyphicon glyphicon-plus"></i>
+    <span>ファイルを選択...</span>
+    <!-- The file input field used as target for the file upload widget -->
+    <input id="id-upload_file" type="file" name="upload_file">
+  </span>
+  <br>
+  <br>
+  <!-- The global progress bar -->
+  <div id="progress" class="progress">
+    <div class="progress-bar progress-bar-success"></div>
+  </div>
+  <p id="response"></p>
+</div>
+</form>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
+<script src="{{ url_for('static', filename='js/vendor/jquery.ui.widget.js') }}"></script>
+<!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+<script src="{{ url_for('static', filename='js/jquery.iframe-transport.js') }}"></script>
+<!-- The basic File Upload plugin -->
+<script src="{{ url_for('static', filename='js/jquery.fileupload.js') }}"></script>
+<script>
+
+$(function () {
+  'use strict';
+  var url = '/upload';
+  $('#id-upload_file').fileupload({
+    url: url,
+    dataType: 'json',
+    done: function (e, data) {
+      $("#response").text(data.result.message);
+      // TODO:完了時、ページを再読込でいいかも
+    },
+    progressall: function (e, data) {
+      $("#response").text("アップロード中...");
+      var progress = parseInt(data.loaded / data.total * 100, 10);
+      $('#progress .progress-bar').css(
+        'width',
+        progress + '%'
+      );
+    },
+    error: function (e, data) {
+      // TODO:エラー処理はクライアント側起因とサーバー側起因で異なるかも
+      $("#response").text("エラーが発生しました。");
+      $('#progress .progress-bar').css('width', '0%');
+    }
+  }).prop('disabled', !$.support.fileInput)
+      .parent().addClass($.support.fileInput ? undefined : 'disabled');
+});
+</script>
+</body>
+</html>
