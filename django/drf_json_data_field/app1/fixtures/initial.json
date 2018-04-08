@@ -1,0 +1,23 @@
+[
+{
+  "model": "app1.model1",
+  "pk": 1,
+  "fields": {
+    "data": "{\n  \"spam\": \"egg\"\n}"
+  }
+},
+{
+  "model": "app1.model1",
+  "pk": 2,
+  "fields": {
+    "data": "{\n  \"items\": [\n    1,\n    2,\n    3\n  ],\n  \"count\": 3\n}"
+  }
+},
+{
+  "model": "app1.model1",
+  "pk": 3,
+  "fields": {
+    "data": "{\n  \"foo\": \"bar\",\n  \"items\": [\n    {\n      \"name\": \"item1\"\n    },\n    {\n      \"name\": \"item2\"\n    }\n  ]\n}"
+  }
+}
+]
