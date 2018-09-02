@@ -14,3 +14,6 @@ syntax: glob
 venv
 __history
 Build
+.env
+.chalice/deployed
+.chalice/deployments
