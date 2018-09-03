@@ -1,14 +1,9 @@
-from chalice import Chalice
 import requests
 import json
 import os
 
-app = Chalice(app_name='send to slack')
-app.debug = True
 
-
-@app.route('/')
-def index():
+def post_to_slack(event, context):
     env_dict = os.environ
     url = env_dict['ENDPOINT']
     payload = {
