@@ -1,4 +1,4 @@
-Django==1.5.4
+Django==1.11.23
 bpmappers==0.7
 django-tastypie==0.10.0
 mimeparse==0.1.3
