@@ -1,18 +1,18 @@
-syntax: glob
 *.dcu
-*.pyc
+*.py[cod]
 *.swp
 *.db
 *.exe
 *.sqlite3
-.tox
+.tox/
 *.egg-info
 *.xml
 *.local
 *.identcache
 *.class
-venv
-__history
-Build
-tmp
+__pycache__/
+venv/
+__history/
+Build/
+tmp/
 package.zip
