@@ -26,3 +26,34 @@ class Greeting(models.Model):
         verbose_name = u'書き込み'
         # 複数形
         verbose_name_plural = u'書き込み'
+
+
+class Note(models.Model):
+    """ ノート
+
+    https://tracery.jp/s/a47b8269bc7c46e4a9a64bbdc0374050
+
+    ページを束ねるノート
+    """
+
+    title = models.CharField(verbose_name="タイトル", null=True)
+    created_at = models.DateTimeField(verbose_name="作成日時")
+
+    class Meta:
+        verbose_name = "ノート"
+        db_table = "note"
+
+
+class Page(models.Model):
+    """ ページ
+
+    https://tracery.jp/s/c9856202d66642f2829d4493afbfab08
+    """
+
+    number = models.IntegerField(verbose_name="ページ番号", default=1)
+    body = models.TextField(verbose_name="本文", null=True)
+    note = models.ForeignKey("Note", on_delete=models.DO_NOTHING, verbose_name="ノート")
+
+    class Meta:
+        verbose_name = "ページ"
+        db_table = "page"
