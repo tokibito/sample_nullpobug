@@ -75,6 +75,8 @@ module.exports = {
 
 ## tailwind.config.cjs
 
+Djangoのテンプレートディレクトリも対象にしないとクラスを検出できない。エントリポイント用のファイルも対象としないといけない
+
 ```
 module.exports = {
   variants: {
