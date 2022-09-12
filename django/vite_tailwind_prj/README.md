@@ -97,3 +97,21 @@ module.exports = {
   }
 }
 ```
+
+## Django側
+
+```
+cd ../myproject
+ln -s ../frontend 
+```
+
+## settings.py
+
+追記
+
+```
+STATIC_ROOT = BASE_DIR / 'static'
+STATICFILES_DIRS = [
+    ("assets", BASE_DIR / "frontend/assets"),
+]
+```
