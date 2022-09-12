@@ -16,3 +16,4 @@ __history/
 Build/
 tmp/
 package.zip
+django/**/static/

@@ -4,10 +4,33 @@
 npm create vite@latest frontend -- --template vanilla-ts
 cd frontend
 npm install
+```
 
-npm run dev -- --host 0.0.0.0
+## 不要なファイルを削除
 
-npm run build
+```
+rm public/vite.svg
+rm src/counter.ts src/style.css src/typescript.svg
+```
+
+## vite.config.ts
+
+```
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+  base: '/static/',  // 静的ファイルのprefix
+  plugins: [],
+  build: {
+    rollupOptions: {
+      output: {
+        entryFileNames: `assets/[name].js`,
+        chunkFileNames: `assets/[name].js`,
+        assetFileNames: `assets/[name].[ext]`
+      }
+    }
+  }
+})
 ```
 
 ## サーバー起動せずwatchによる継続ビルド用に書き換え
@@ -23,6 +46,20 @@ dist/assetsにビルド結果が出るので、シンボリックリンクでDja
 ## sassとtailwindとdaisyui
 
 npm install --save-dev tailwindcss daisyui sass postcss postcss-import autoprefixer
+
+## main.ts
+
+```
+import './style.scss'
+```
+
+## style.scss
+
+```
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
 
 ## postcss.config.cjs
 
@@ -46,6 +83,7 @@ module.exports = {
   },
   content: [
     "./*.html",
+    "../myproject/templates/*.html",
   ],
   theme: {
     extend: {},
