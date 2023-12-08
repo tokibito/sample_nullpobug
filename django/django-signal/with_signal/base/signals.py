@@ -1,3 +1,3 @@
-from django.core.signals import Signal
+from django.dispatch import Signal
 
 spam_main = Signal()
