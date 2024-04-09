@@ -133,5 +133,6 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_HEADERS = [
     *default_headers,
     "my-custom-header",
+#    "*",
 ]
 CORS_ALLOW_CREDENTIALS = True
