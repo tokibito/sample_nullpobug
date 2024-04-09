@@ -1,0 +1,26 @@
+<html>
+<head>
+  <title>frame page</title>
+</head>
+<body>
+  <button type="button" id="load-button">Load</button>
+  <div id="container"></div>
+  <script type="module">
+    async function load() {
+      const url = "http://127.0.0.1:8000/";
+      const options = {
+        method: "put",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": "dummy-token"
+        },
+        credentials: "include"
+      };
+      const response = await fetch(url, options);
+      const target = document.getElementById("container");
+      target.innerText = await response.text();
+    }
+    document.getElementById("load-button").onclick = load;
+  </script>
+</body>
+</html>
