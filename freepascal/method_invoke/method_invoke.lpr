@@ -1,10 +1,6 @@
 program method_invoke;
 
-{$IFDEF FPC}
 {$MODE Delphi}
-{$ELSE}
-{$APPTYPE CONSOLE}
-{$ENDIF}
 
 uses
   MyClass in './my_class.pp',

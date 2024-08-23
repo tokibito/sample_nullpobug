@@ -1,9 +1,7 @@
 unit my_class;
 
 {$M+}  // publishedを使うのでM+オプション指定
-{$IFDEF FPC}
 {$MODE Delphi}
-{$ENDIF}
 
 interface
 
