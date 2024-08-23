@@ -15,5 +15,6 @@ var
 
 begin
   obj := TMyClass.Create;
+  // TMyClassのSayHelloを呼び出し、Selfにはobjを指定
   InvokeMethod(obj, 'SayHello', TMyClass);
 end.
