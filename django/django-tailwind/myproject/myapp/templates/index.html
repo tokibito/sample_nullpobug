@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Django Tailwind{% endblock %}
+
+{% block h1 %}Django + Tailwind{% endblock %}
+
+{% block main %}
+<div class="max-w-sm rounded overflow-hidden shadow-lg border mb-2">
+  <div class="px-6 py-4">
+    <div class="font-bold text-xl mb-2">カードタイトル</div>
+    <p class="text-gray-700 text-base">カード本文</p>
+  </div>
+  <div class="px-6 pt-2 pb-2">
+    <a href="http://example.com/" class="bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-blue-700 mr-2 mb-2">Read more</a>
+  </div>
+</div>
+{% endblock %}
