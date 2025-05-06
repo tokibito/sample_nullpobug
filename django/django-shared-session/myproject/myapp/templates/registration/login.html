@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% load django_bootstrap5 %}
+
+{% block title %}
+Django側のログイン画面
+{% endblock %}
+
+{% block content %}
+<p>これはDjango側の画面です。</p>
+<h2>ログインフォーム</h2>
+<div class="row">
+  <form method="post" action="{% url 'myapp:login' %}" class="col-md-4">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button type="submit" class="btn btn-primary">ログイン</button>
+  </form>
+</div>
+{% endblock %}

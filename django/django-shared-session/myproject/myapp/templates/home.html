@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load django_bootstrap5 %}
+
+{% block title %}
+Django側の画面
+{% endblock %}
+
+{% block content %}
+<p>ログイン中のユーザー: {{ user.username }}</p>
+<p>これはDjango側の画面です。</p>
+<div>
+  <a href="/php/" class="btn btn-primary">PHP側の画面へ</a>
+</div>
+<div>
+  <form method="post" action="{% url 'myapp:logout' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">ログアウト</button>
+  </form>
+</div>
+{% endblock %}
