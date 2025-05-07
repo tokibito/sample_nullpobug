@@ -48,6 +48,24 @@ if ($expire_date < new DateTime()) {
 
 // セッション情報をデコード
 $session = django_signer_loads($session_data, APP_SECRET_KEY, APP_SESSION_SALT, 360000);
+
+// ユーザー情報を取得
+$user_id = $session['_auth_user_id'] ?? null;
+if ($user_id === null) {
+  // ユーザー情報が取得できない場合、ログイン画面にリダイレクト
+  redirectLoginPage();
+}
+
+// ユーザー情報をデータベースから取得
+$stmt = $db->prepare("SELECT username FROM auth_user WHERE id = :user_id");
+$stmt->execute([':user_id' => $user_id]);
+$row = $stmt->fetch(PDO::FETCH_ASSOC);
+if ($row) {
+  $username = $row['username'];
+} else {
+  // ユーザー情報が無効な場合、ログイン画面にリダイレクト
+  redirectLoginPage();
+}
 ?>
 <!doctype html>
 <html lang="ja">
@@ -55,12 +73,18 @@ $session = django_signer_loads($session_data, APP_SECRET_KEY, APP_SESSION_SALT, 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>PHP側の画面</title>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" rel="stylesheet">
   </head>
   <body>
-    <h1>PHP側の画面</h1>
-    Django側で保存されたセッションの情報:
-    <code><pre>
-<?php echo htmlspecialchars(print_r($session, true)); ?>
-    <pre></code>
+    <div class="container">
+      <h1>PHP側の画面</h1>
+      <p>ログイン中のユーザー: <?php echo $username ?></p>
+      <p>これはPHP側の画面です。</p>
+      Django側で保存されたセッションの情報:
+      <pre><code><?php echo htmlspecialchars(print_r($session, true)); ?></code></pre>
+      <div>
+        <a href="/django/" class="btn btn-primary">Django側の画面へ</a>
+      </div>
+    </div>
   </body>
 </html>
