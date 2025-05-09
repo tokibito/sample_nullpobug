@@ -173,13 +173,16 @@ function django_signer_dumps($value, string $secret, string $salt, bool $compres
   }
 
   if ($compress) {
-    $compressed = zlib_encode($json, ZLIB_ENCODING_DEFLATE);
-    $data = '.' . $compressed; // Dot prefix indicates compression
+    $data = zlib_encode($json, ZLIB_ENCODING_DEFLATE);
   } else {
     $data = $json;
   }
 
   $b64 = b64_encode($data);
+  // add a dot to the beginning of the string if compress is true
+  if ($compress) {
+    $b64 = '.' . $b64;
+  }
 
   if ($add_timestamp) {
     $signer = new TimestampSigner($secret, $salt);
@@ -201,7 +204,7 @@ function django_signer_loads(string $signed_value, string $secret, string $salt,
     $b64 = $signer->unsign($signed_value);
   }
 
-  // 先頭1バイトが.の場合は圧縮データ
+  // first character is a dot, indicating compression
   $is_compressed = false;
   if (strlen($b64) > 0 && $b64[0] === '.') {
     $is_compressed = true;

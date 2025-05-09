@@ -7,8 +7,10 @@ Django側の画面
 {% endblock %}
 
 {% block content %}
-<p>ログイン中のユーザー: {{ user.username }}</p>
+<p>ログイン中のユーザー: id={{ user.id }} username={{ user.username }}</p>
 <p>これはDjango側の画面です。</p>
+<p>カウンター: {{ request.session.counter|default:0 }}</p>
+<pre><code>{{ session_data }}</code></pre>
 <div>
   <a href="/php/" class="btn btn-primary">PHP側の画面へ</a>
 </div>

@@ -1,32 +1,19 @@
 # django shared session example
 
 * Python 3.13
+* PHP 8.4
+* docker compose
 
-## setup
-
-```
-python3.13 -m venv venv
-. venv/bin/activate
-pip install -r requirements.txt
-cd myproject
-python manage.py migrate
-```
-
-add admin user
+## run docker
 
 ```
-python manage.py createsuperuser
+docker compose up
 ```
 
-## run
+open browser and go to `http://localhost/`
 
-Django:
-
-```
-python manage.py runserver
-```
-
-PHP:
+# add admin user
 
 ```
+docker compose exec django python manage.py createsuperuser
 ```
