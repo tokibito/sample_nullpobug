@@ -8,8 +8,9 @@ Django側の画面
 
 {% block content %}
 <p>ログイン中のユーザー: id={{ user.id }} username={{ user.username }}</p>
-<p>これはDjango側の画面です。</p>
-<p>カウンター: {{ request.session.counter|default:0 }}</p>
+<p>これはDjangoでレンダリングされた画面です。</p>
+<p>PHP側で更新したカウンター: {{ request.session.counter|default:0 }}</p>
+<p>Djangoのセッションデータ:</p>
 <pre><code>{{ session_data }}</code></pre>
 <div>
   <a href="/php/" class="btn btn-primary">PHP側の画面へ</a>

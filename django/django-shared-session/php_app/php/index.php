@@ -85,8 +85,9 @@ $stmt->execute([':session_data' => $session_data, ':session_key' => $session_id]
     <div class="container mt-5">
       <h1>PHP側の画面</h1>
       <p>ログイン中のユーザー: id=<?php echo $user['id'] ?> username=<?php echo $user['username'] ?></p>
-      <p>これはPHP側の画面です。</p>
-      Django側で保存されたセッションの情報:
+      <p>これはPHPでレンダリングされた画面です。</p>
+      <p>PHP側で更新したカウンター: <?php echo $session['counter'] ?></p>
+      <p>Djangoのセッションデータ:</p>
       <pre><code><?php echo htmlspecialchars(print_r($session, true)); ?></code></pre>
       <div>
         <a href="/django/" class="btn btn-primary">Django側の画面へ</a>
