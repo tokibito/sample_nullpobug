@@ -46,8 +46,8 @@ if ($expire_date < new DateTime()) {
   redirectLoginPage();
 }
 
-// セッション情報をデコード
-$session = django_signer_loads($session_data, APP_SECRET_KEY, APP_SESSION_SALT, 360000);
+// セッションデータをデコード
+$session = django_signer_loads($session_data, APP_SECRET_KEY, APP_SESSION_SALT);
 
 // ユーザー情報を取得
 $user_id = $session['_auth_user_id'] ?? null;
