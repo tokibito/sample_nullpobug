@@ -166,11 +166,7 @@ class TimestampSigner extends Signer
 
 function django_signer_dumps($value, string $secret, string $salt, bool $compress = false, bool $add_timestamp = false): string
 {
-  $json = json_encode($value, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-
-  if ($json === false) {
-    throw new RuntimeException("JSON encoding failed");
-  }
+  $json = json_encode($value, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
 
   if ($compress) {
     $data = zlib_encode($json, ZLIB_ENCODING_DEFLATE);
