@@ -1,0 +1,57 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "e57abd2c2048e1ce906a803491070814",
+    "packages": [
+        {
+            "name": "nullpobug/django-signing",
+            "version": "v0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tokibito/php-django-signing.git",
+                "reference": "2e500a18cd8a6d72e08a1c99dcf1b357f4ead32f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tokibito/php-django-signing/zipball/2e500a18cd8a6d72e08a1c99dcf1b357f4ead32f",
+                "reference": "2e500a18cd8a6d72e08a1c99dcf1b357f4ead32f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^2.1",
+                "phpunit/phpunit": "^10.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Nullpobug\\Django\\Signing\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Django compatible signing library",
+            "support": {
+                "issues": "https://github.com/tokibito/php-django-signing/issues",
+                "source": "https://github.com/tokibito/php-django-signing/tree/v0.1.1"
+            },
+            "time": "2025-05-27T13:36:40+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {},
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {},
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
+}

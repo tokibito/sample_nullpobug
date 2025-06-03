@@ -19,3 +19,4 @@ Build/
 tmp/
 package.zip
 django/**/static/
+vendor/

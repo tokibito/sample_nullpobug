@@ -1,0 +1,5 @@
+{
+    "require": {
+        "nullpobug/django-signing": "^0.1.1"
+    }
+}

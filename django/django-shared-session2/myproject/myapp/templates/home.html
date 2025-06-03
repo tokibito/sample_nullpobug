@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% load django_bootstrap5 %}
+
+{% block title %}
+Django側の画面
+{% endblock %}
+
+{% block content %}
+<p>ログイン中のユーザー: id={{ user.id }} username={{ user.username }}</p>
+<p>これはDjangoでレンダリングされた画面です。</p>
+<p>PHP側で更新したカウンター: {{ request.session.counter|default:0 }}</p>
+<p>Djangoのセッションデータ:</p>
+<pre><code>{{ session_data }}</code></pre>
+<div>
+  <a href="/php/" class="btn btn-primary">PHP側の画面へ</a>
+</div>
+<div>
+  <form method="post" action="{% url 'myapp:logout' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">ログアウト</button>
+  </form>
+</div>
+{% endblock %}

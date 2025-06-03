@@ -1,0 +1,35 @@
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - django
+      - php
+
+  django:
+    image: python:3.13
+    working_dir: /app
+    volumes:
+      - ./myproject:/app
+      - ./database:/database
+    command: >
+      sh -c "pip install -r requirements.txt &&
+             python manage.py migrate &&
+             exec python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+
+  php:
+    image: composer:latest
+    working_dir: /var/www/app
+    volumes:
+      - ./phpapp:/var/www/app
+      - ./database:/var/www/database
+    command: >
+      sh -c "composer install &&
+             exec php -S 0.0.0.0:8001 -t /var/www/app/webroot"
+    ports:
+      - "8001:8001"
